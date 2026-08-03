@@ -1,16 +1,6 @@
 ---
 import { urlFor } from '../lib/sanity';
-
-export interface WheelData {
-  _id: string;
-  style: string;
-  name: { en: string; es?: string };
-  availableFinishes?: string[];
-  spokeCount?: number;
-  quoteOnly: boolean;
-  priceRange?: { min?: number; max?: number };
-  images?: any[];
-}
+import type { WheelData } from '../lib/queries';
 
 interface Props {
   wheel: WheelData;

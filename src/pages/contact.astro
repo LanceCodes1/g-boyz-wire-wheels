@@ -1,15 +1,8 @@
 ---
 import { sanityClient } from '../lib/sanity';
+import { BUSINESS_INFO_QUERY, type BusinessInfo } from '../lib/queries';
 
-interface BusinessInfo {
-	hours?: { day: string; open?: string; close?: string; closed?: boolean }[];
-	contact?: { phone?: string; email?: string; address?: string };
-	socialHandles?: { platform: string; handle?: string; url?: string }[];
-}
-
-const query = `*[_type == "businessInfo"][0]{ hours, contact, socialHandles }`;
-
-const businessInfo = await sanityClient.fetch<BusinessInfo | null>(query);
+const businessInfo = await sanityClient.fetch<BusinessInfo | null>(BUSINESS_INFO_QUERY);
 
 const DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as const;
 

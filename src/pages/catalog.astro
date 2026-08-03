@@ -1,19 +1,9 @@
 ---
 import { sanityClient } from '../lib/sanity';
-import WheelCard, { type WheelData } from '../components/WheelCard.astro';
+import WheelCard from '../components/WheelCard.astro';
+import { WHEELS_QUERY, type WheelData } from '../lib/queries';
 
-const query = `*[_type == "wheel"] | order(style asc) {
-  _id,
-  style,
-  name,
-  availableFinishes,
-  spokeCount,
-  quoteOnly,
-  priceRange,
-  images
-}`;
-
-const wheels = await sanityClient.fetch<WheelData[]>(query);
+const wheels = await sanityClient.fetch<WheelData[]>(WHEELS_QUERY);
 ---
 
 <html lang="en">

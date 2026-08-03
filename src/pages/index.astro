@@ -1,4 +1,13 @@
 ---
+import { sanityClient } from '../lib/sanity';
+import WheelCard from '../components/WheelCard.astro';
+import { WHEELS_QUERY, BUSINESS_INFO_QUERY, type WheelData, type BusinessInfo } from '../lib/queries';
+
+const allWheels = await sanityClient.fetch<WheelData[]>(WHEELS_QUERY);
+const featuredWheels = allWheels.slice(0, 3);
+
+const businessInfo = await sanityClient.fetch<BusinessInfo | null>(BUSINESS_INFO_QUERY);
+const contact = businessInfo?.contact ?? {};
 ---
 
 <html lang="en">
@@ -11,7 +20,39 @@
 		<title>G Boyz Wire Wheels</title>
 	</head>
 	<body>
-		<h1>G Boyz Wire Wheels — scaffold placeholder (EN)</h1>
+		<section class="hero">
+			<h1>Custom Wire Wheels, Built to Order</h1>
+			<p>Hand-built wire wheels for classics, lowriders, and customs — every style, every finish.</p>
+			<a href="/contact" class="cta">Request a Quote</a>
+		</section>
+
+		{featuredWheels.length > 0 && (
+			<section class="featured-wheels">
+				<h2>Featured Styles</h2>
+				<div class="wheel-grid">
+					{featuredWheels.map((w) => <WheelCard wheel={w} />)}
+				</div>
+			</section>
+		)}
+
+		<section class="about">
+			<h2>About G Boyz Wire Wheels</h2>
+			<p>
+				G Boyz Wire Wheels started with a simple idea — do it right, every time, and let
+				the work speak for itself. Inspired by family already in the trade, founders
+				Madeline and Oscar built the shop from the ground up on nothing but reputation,
+				hard work, and word-of-mouth — no outside capital, just craftsmanship that kept
+				customers coming back. Twenty-five years later, that same commitment to quality
+				still drives every wheel that leaves the shop.
+			</p>
+		</section>
+
+		<section class="contact-strip">
+			{contact.phone && <p>{contact.phone}</p>}
+			{contact.address && <p>{contact.address}</p>}
+			<a href="/contact">See full hours &amp; contact info</a>
+		</section>
+
 		<p><a href="/es/">Ver en Español</a></p>
 	</body>
 </html>
