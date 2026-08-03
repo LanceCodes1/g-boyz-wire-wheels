@@ -1,0 +1,23 @@
+{
+  "name": "g-boyz-wire-wheels-studio",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "build": "sanity build",
+    "deploy": "sanity deploy"
+  },
+  "dependencies": {
+    "@sanity/vision": "^6",
+    "react": "^19",
+    "react-dom": "^19",
+    "sanity": "^6"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "@types/react": "^19",
+    "typescript": "^5"
+  }
+}
