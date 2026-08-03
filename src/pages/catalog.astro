@@ -14,7 +14,6 @@ const query = `*[_type == "wheel"] | order(style asc) {
 }`;
 
 const wheels = await sanityClient.fetch(query);
-const testWheel = wheels[0];
 ---
 
 <html lang="en">
@@ -28,6 +27,12 @@ const testWheel = wheels[0];
 	</head>
 	<body>
 		<h1>Catalog</h1>
-		{testWheel ? <WheelCard wheel={testWheel} /> : <p>No wheels in Sanity yet.</p>}
+		{wheels.length > 0 ? (
+			<div class="wheel-grid">
+				{wheels.map((w) => <WheelCard wheel={w} />)}
+			</div>
+		) : (
+			<p>No wheels in Sanity yet.</p>
+		)}
 	</body>
 </html>
