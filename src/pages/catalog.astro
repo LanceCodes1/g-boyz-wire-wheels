@@ -1,0 +1,33 @@
+---
+import { sanityClient } from '../lib/sanity';
+import WheelCard from '../components/WheelCard.astro';
+
+const query = `*[_type == "wheel"] | order(style asc) {
+  _id,
+  style,
+  name,
+  availableFinishes,
+  spokeCount,
+  quoteOnly,
+  priceRange,
+  images
+}`;
+
+const wheels = await sanityClient.fetch(query);
+const testWheel = wheels[0];
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Catalog — G Boyz Wire Wheels</title>
+	</head>
+	<body>
+		<h1>Catalog</h1>
+		{testWheel ? <WheelCard wheel={testWheel} /> : <p>No wheels in Sanity yet.</p>}
+	</body>
+</html>

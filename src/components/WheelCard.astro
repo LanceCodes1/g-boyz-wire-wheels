@@ -1,0 +1,45 @@
+---
+import { urlFor } from '../lib/sanity';
+
+interface Props {
+  wheel: {
+    _id: string;
+    style: string;
+    name: { en: string; es?: string };
+    availableFinishes?: string[];
+    spokeCount?: number;
+    quoteOnly: boolean;
+    priceRange?: { min?: number; max?: number };
+    images?: any[];
+  };
+}
+
+const { wheel } = Astro.props;
+const locale = Astro.currentLocale ?? 'en';
+const displayName = wheel.name[locale as 'en' | 'es'] || wheel.name.en;
+---
+
+<article>
+  {wheel.images && wheel.images.length > 0 ? (
+    <img src={urlFor(wheel.images[0]).width(400).url()} alt={displayName} />
+  ) : (
+    <div class="no-image">No image yet</div>
+  )}
+
+  <p class="style">{wheel.style}</p>
+  <h3>{displayName}</h3>
+
+  {wheel.availableFinishes && wheel.availableFinishes.length > 0 && (
+    <p class="finishes">{wheel.availableFinishes.join(', ')}</p>
+  )}
+
+  {wheel.spokeCount && <p class="spoke-count">{wheel.spokeCount}-Spoke</p>}
+
+  {wheel.quoteOnly ? (
+    <a href="/contact" class="quote-btn">Request a Quote</a>
+  ) : wheel.priceRange?.min ? (
+    <p class="price">Starting at ${wheel.priceRange.min}</p>
+  ) : (
+    <p class="price">Contact for pricing</p>
+  )}
+</article>
