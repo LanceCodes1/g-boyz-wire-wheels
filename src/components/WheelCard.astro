@@ -10,20 +10,11 @@ const { wheel } = Astro.props;
 const locale = Astro.currentLocale ?? 'en';
 const displayName = wheel.name[locale as 'en' | 'es'] || wheel.name.en;
 
-const strings = {
-  en: {
-    requestQuote: 'Request a Quote',
-    startingAt: 'Starting at',
-    contactForPricing: 'Contact for pricing',
-  },
-  es: {
-    requestQuote: 'Solicitar una Cotización',
-    startingAt: 'Desde',
-    contactForPricing: 'Contacta para el precio',
-  },
-} as const;
-
-const t = strings[locale as 'en' | 'es'] ?? strings.en;
+const labels = {
+  en: { quote: 'Request a Quote', startingAt: 'Starting at $', contactForPricing: 'Contact for pricing' },
+  es: { quote: 'Solicitar una Cotización', startingAt: 'Desde $', contactForPricing: 'Contactar para precio' },
+};
+const t = labels[locale as 'en' | 'es'] ?? labels.en;
 ---
 
 <article>
@@ -43,9 +34,9 @@ const t = strings[locale as 'en' | 'es'] ?? strings.en;
   {wheel.spokeCount && <p class="spoke-count">{wheel.spokeCount}-Spoke</p>}
 
   {wheel.quoteOnly ? (
-    <a href="/contact" class="quote-btn">{t.requestQuote}</a>
+    <a href="/contact" class="quote-btn">{t.quote}</a>
   ) : wheel.priceRange?.min ? (
-    <p class="price">{t.startingAt} ${wheel.priceRange.min}</p>
+    <p class="price">{t.startingAt}{wheel.priceRange.min}</p>
   ) : (
     <p class="price">{t.contactForPricing}</p>
   )}
