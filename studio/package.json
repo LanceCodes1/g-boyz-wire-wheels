@@ -13,7 +13,8 @@
     "@sanity/vision": "^6",
     "react": "^19",
     "react-dom": "^19",
-    "sanity": "^6"
+    "sanity": "^6",
+    "styled-components": "^6.4.4"
   },
   "devDependencies": {
     "@types/node": "^26.1.2",

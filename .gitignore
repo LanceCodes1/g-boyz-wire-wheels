@@ -2,6 +2,7 @@
 dist/
 .vercel/
 studio/dist/
+studio/.sanity/
 # generated types
 .astro/
 
