@@ -9,6 +9,21 @@ interface Props {
 const { wheel } = Astro.props;
 const locale = Astro.currentLocale ?? 'en';
 const displayName = wheel.name[locale as 'en' | 'es'] || wheel.name.en;
+
+const strings = {
+  en: {
+    requestQuote: 'Request a Quote',
+    startingAt: 'Starting at',
+    contactForPricing: 'Contact for pricing',
+  },
+  es: {
+    requestQuote: 'Solicitar una Cotización',
+    startingAt: 'Desde',
+    contactForPricing: 'Contacta para el precio',
+  },
+} as const;
+
+const t = strings[locale as 'en' | 'es'] ?? strings.en;
 ---
 
 <article>
@@ -28,10 +43,10 @@ const displayName = wheel.name[locale as 'en' | 'es'] || wheel.name.en;
   {wheel.spokeCount && <p class="spoke-count">{wheel.spokeCount}-Spoke</p>}
 
   {wheel.quoteOnly ? (
-    <a href="/contact" class="quote-btn">Request a Quote</a>
+    <a href="/contact" class="quote-btn">{t.requestQuote}</a>
   ) : wheel.priceRange?.min ? (
-    <p class="price">Starting at ${wheel.priceRange.min}</p>
+    <p class="price">{t.startingAt} ${wheel.priceRange.min}</p>
   ) : (
-    <p class="price">Contact for pricing</p>
+    <p class="price">{t.contactForPricing}</p>
   )}
 </article>

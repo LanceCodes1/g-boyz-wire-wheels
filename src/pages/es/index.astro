@@ -1,4 +1,13 @@
 ---
+import { sanityClient } from '../../lib/sanity';
+import WheelCard from '../../components/WheelCard.astro';
+import { WHEELS_QUERY, BUSINESS_INFO_QUERY, type WheelData, type BusinessInfo } from '../../lib/queries';
+
+const allWheels = await sanityClient.fetch<WheelData[]>(WHEELS_QUERY);
+const featuredWheels = allWheels.slice(0, 3);
+
+const businessInfo = await sanityClient.fetch<BusinessInfo | null>(BUSINESS_INFO_QUERY);
+const contact = businessInfo?.contact ?? {};
 ---
 
 <html lang="es">
@@ -11,7 +20,40 @@
 		<title>G Boyz Wire Wheels</title>
 	</head>
 	<body>
-		<h1>G Boyz Wire Wheels — placeholder de scaffold (ES)</h1>
+		<section class="hero">
+			<h1>Ruedas de Alambre Personalizadas, Hechas a Pedido</h1>
+			<p>Ruedas de alambre hechas a mano para clásicos, lowriders y autos personalizados — todos los estilos, todos los acabados.</p>
+			<a href="/contact" class="cta">Solicitar una Cotización</a>
+		</section>
+
+		{featuredWheels.length > 0 && (
+			<section class="featured-wheels">
+				<h2>Estilos Destacados</h2>
+				<div class="wheel-grid">
+					{featuredWheels.map((w) => <WheelCard wheel={w} />)}
+				</div>
+			</section>
+		)}
+
+		<section class="about">
+			<h2>Sobre G Boyz Wire Wheels</h2>
+			<p>
+				G Boyz Wire Wheels comenzó con una idea simple — hacerlo bien, cada vez, y dejar
+				que el trabajo hable por sí mismo. Inspirados por familiares ya en el oficio, los
+				fundadores Madeline y Oscar construyeron el taller desde cero, basándose
+				únicamente en su reputación, trabajo duro y recomendaciones de boca en boca — sin
+				capital externo, solo artesanía que hacía regresar a los clientes. Veinticinco
+				años después, ese mismo compromiso con la calidad sigue guiando cada rueda que
+				sale del taller.
+			</p>
+		</section>
+
+		<section class="contact-strip">
+			{contact.phone && <p>{contact.phone}</p>}
+			{contact.address && <p>{contact.address}</p>}
+			<a href="/contact">Ver horario completo e información de contacto</a>
+		</section>
+
 		<p><a href="/">View in English</a></p>
 	</body>
 </html>
