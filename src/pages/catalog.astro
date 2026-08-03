@@ -1,6 +1,6 @@
 ---
 import { sanityClient } from '../lib/sanity';
-import WheelCard from '../components/WheelCard.astro';
+import WheelCard, { type WheelData } from '../components/WheelCard.astro';
 
 const query = `*[_type == "wheel"] | order(style asc) {
   _id,
@@ -13,7 +13,7 @@ const query = `*[_type == "wheel"] | order(style asc) {
   images
 }`;
 
-const wheels = await sanityClient.fetch(query);
+const wheels = await sanityClient.fetch<WheelData[]>(query);
 ---
 
 <html lang="en">

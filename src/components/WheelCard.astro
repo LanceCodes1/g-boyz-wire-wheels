@@ -1,17 +1,19 @@
 ---
 import { urlFor } from '../lib/sanity';
 
+export interface WheelData {
+  _id: string;
+  style: string;
+  name: { en: string; es?: string };
+  availableFinishes?: string[];
+  spokeCount?: number;
+  quoteOnly: boolean;
+  priceRange?: { min?: number; max?: number };
+  images?: any[];
+}
+
 interface Props {
-  wheel: {
-    _id: string;
-    style: string;
-    name: { en: string; es?: string };
-    availableFinishes?: string[];
-    spokeCount?: number;
-    quoteOnly: boolean;
-    priceRange?: { min?: number; max?: number };
-    images?: any[];
-  };
+  wheel: WheelData;
 }
 
 const { wheel } = Astro.props;

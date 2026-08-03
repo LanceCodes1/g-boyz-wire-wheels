@@ -1,0 +1,78 @@
+---
+import { sanityClient } from '../lib/sanity';
+
+interface BusinessInfo {
+	hours?: { day: string; open?: string; close?: string; closed?: boolean }[];
+	contact?: { phone?: string; email?: string; address?: string };
+	socialHandles?: { platform: string; handle?: string; url?: string }[];
+}
+
+const query = `*[_type == "businessInfo"][0]{ hours, contact, socialHandles }`;
+
+const businessInfo = await sanityClient.fetch<BusinessInfo | null>(query);
+
+const DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as const;
+
+const hours = businessInfo?.hours ?? [];
+const contact = businessInfo?.contact ?? {};
+const socialHandles = businessInfo?.socialHandles ?? [];
+
+const phoneHref = contact.phone ? `tel:${contact.phone.replace(/[^\d+]/g, '')}` : null;
+const emailHref = contact.email ? `mailto:${contact.email}` : null;
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Contact — G Boyz Wire Wheels</title>
+	</head>
+	<body>
+		<h1>Contact</h1>
+
+		<section class="hours">
+			<h2>Hours</h2>
+			<ul>
+				{DAYS.map((day) => {
+					const entry = hours.find((h) => h.day === day);
+					const isClosed = !entry || entry.closed;
+					return (
+						<li>
+							<span class="day">{day[0].toUpperCase() + day.slice(1)}</span>
+							{isClosed ? (
+								<span class="status">Closed</span>
+							) : (
+								<span class="status">{entry.open} – {entry.close}</span>
+							)}
+						</li>
+					);
+				})}
+			</ul>
+		</section>
+
+		<section class="contact-info">
+			<h2>Contact</h2>
+			{contact.phone && (
+				<p><a href={phoneHref}>{contact.phone}</a></p>
+			)}
+			{contact.email && (
+				<p><a href={emailHref}>{contact.email}</a></p>
+			)}
+			{contact.address && <p>{contact.address}</p>}
+		</section>
+
+		{socialHandles && socialHandles.length > 0 && (
+			<section class="social">
+				<h2>Follow Us</h2>
+				<ul>
+					{socialHandles.map((s) => (
+						<li><a href={s.url}>{s.handle}</a></li>
+					))}
+				</ul>
+			</section>
+		)}
+	</body>
+</html>
