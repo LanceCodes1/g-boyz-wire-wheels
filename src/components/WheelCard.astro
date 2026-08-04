@@ -15,6 +15,8 @@ const labels = {
   es: { quote: 'Solicitar una Cotización', startingAt: 'Desde $', contactForPricing: 'Contactar para precio' },
 };
 const t = labels[locale as 'en' | 'es'] ?? labels.en;
+
+const contactHref = locale === 'es' ? '/es/contact' : '/contact';
 ---
 
 <article>
@@ -34,7 +36,7 @@ const t = labels[locale as 'en' | 'es'] ?? labels.en;
   {wheel.spokeCount && <p class="spoke-count">{wheel.spokeCount}-Spoke</p>}
 
   {wheel.quoteOnly ? (
-    <a href="/contact" class="quote-btn">{t.quote}</a>
+    <a href={contactHref} class="quote-btn">{t.quote}</a>
   ) : wheel.priceRange?.min ? (
     <p class="price">{t.startingAt}{wheel.priceRange.min}</p>
   ) : (

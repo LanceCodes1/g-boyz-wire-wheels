@@ -10,13 +10,15 @@ const featuredWheels = allWheels.slice(0, 3);
 
 const businessInfo = await sanityClient.fetch<BusinessInfo | null>(BUSINESS_INFO_QUERY);
 const contact = businessInfo?.contact ?? {};
+
+const contactHref = Astro.currentLocale === 'es' ? '/es/contact' : '/contact';
 ---
 
 <BaseLayout title="G Boyz Wire Wheels" lang="es">
 		<section class="hero">
 			<h1>Ruedas de Alambre Personalizadas, Hechas a Pedido</h1>
 			<p>Ruedas de alambre hechas a mano para clásicos, lowriders y autos personalizados — todos los estilos, todos los acabados.</p>
-			<a href="/contact" class="cta">Solicitar una Cotización</a>
+			<a href={contactHref} class="cta">Solicitar una Cotización</a>
 		</section>
 
 		<SpokeDivider />
@@ -50,7 +52,7 @@ const contact = businessInfo?.contact ?? {};
 		<section class="contact-strip page">
 			{contact.phone && <p>{contact.phone}</p>}
 			{contact.address && <p>{contact.address}</p>}
-			<a href="/contact">Ver horario completo e información de contacto</a>
+			<a href={contactHref}>Ver horario completo e información de contacto</a>
 		</section>
 
 		<p class="page"><a href="/">View in English</a></p>

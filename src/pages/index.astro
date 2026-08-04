@@ -10,13 +10,15 @@ const featuredWheels = allWheels.slice(0, 3);
 
 const businessInfo = await sanityClient.fetch<BusinessInfo | null>(BUSINESS_INFO_QUERY);
 const contact = businessInfo?.contact ?? {};
+
+const contactHref = Astro.currentLocale === 'es' ? '/es/contact' : '/contact';
 ---
 
 <BaseLayout title="G Boyz Wire Wheels" lang="en">
 		<section class="hero">
 			<h1>Custom Wire Wheels, Built to Order</h1>
 			<p>Hand-built wire wheels for classics, lowriders, and customs — every style, every finish.</p>
-			<a href="/contact" class="cta">Request a Quote</a>
+			<a href={contactHref} class="cta">Request a Quote</a>
 		</section>
 
 		<SpokeDivider />
@@ -49,7 +51,7 @@ const contact = businessInfo?.contact ?? {};
 		<section class="contact-strip page">
 			{contact.phone && <p>{contact.phone}</p>}
 			{contact.address && <p>{contact.address}</p>}
-			<a href="/contact">See full hours &amp; contact info</a>
+			<a href={contactHref}>See full hours &amp; contact info</a>
 		</section>
 
 		<p class="page"><a href="/es/">Ver en Español</a></p>
