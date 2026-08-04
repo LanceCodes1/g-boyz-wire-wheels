@@ -1,0 +1,102 @@
+---
+import { sanityClient } from '../../lib/sanity';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { BUSINESS_INFO_QUERY, type BusinessInfo } from '../../lib/queries';
+
+const businessInfo = await sanityClient.fetch<BusinessInfo | null>(BUSINESS_INFO_QUERY);
+
+const DAYS = [
+	{ key: 'monday', label: 'Lunes' },
+	{ key: 'tuesday', label: 'Martes' },
+	{ key: 'wednesday', label: 'Miércoles' },
+	{ key: 'thursday', label: 'Jueves' },
+	{ key: 'friday', label: 'Viernes' },
+	{ key: 'saturday', label: 'Sábado' },
+	{ key: 'sunday', label: 'Domingo' },
+] as const;
+
+const hours = businessInfo?.hours ?? [];
+const contact = businessInfo?.contact ?? {};
+const socialHandles = businessInfo?.socialHandles ?? [];
+
+const phoneHref = contact.phone ? `tel:${contact.phone.replace(/[^\d+]/g, '')}` : null;
+const emailHref = contact.email ? `mailto:${contact.email}` : null;
+---
+
+<BaseLayout title="Contacto — G Boyz Wire Wheels" lang="es">
+	<div class="page">
+		<h1>Contacto</h1>
+
+		<section class="hours">
+			<h2>Horario</h2>
+			<ul>
+				{DAYS.map(({ key, label }) => {
+					const entry = hours.find((h) => h.day === key);
+					const isClosed = !entry || entry.closed;
+					return (
+						<li>
+							<span class="day">{label}</span>
+							{isClosed ? (
+								<span class="status">Cerrado</span>
+							) : (
+								<span class="status">{entry.open} – {entry.close}</span>
+							)}
+						</li>
+					);
+				})}
+			</ul>
+		</section>
+
+		<section class="contact-info">
+			<h2>Contacto</h2>
+			{contact.phone && (
+				<p><a href={phoneHref}>{contact.phone}</a></p>
+			)}
+			{contact.email && (
+				<p><a href={emailHref}>{contact.email}</a></p>
+			)}
+			{contact.address && <p>{contact.address}</p>}
+		</section>
+
+		{socialHandles && socialHandles.length > 0 && (
+			<section class="social">
+				<h2>Síguenos</h2>
+				<ul>
+					{socialHandles.map((s) => (
+						<li><a href={s.url}>{s.handle}</a></li>
+					))}
+				</ul>
+			</section>
+		)}
+	</div>
+
+	<style>
+		.hours ul,
+		.social ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.hours li {
+			display: flex;
+			justify-content: space-between;
+			max-width: 320px;
+			padding: 0.35rem 0;
+			border-bottom: 1px solid var(--color-surface);
+		}
+
+		.hours .status {
+			font-family: var(--font-mono);
+			color: var(--color-border);
+		}
+
+		.contact-info p {
+			margin: 0.35rem 0;
+		}
+
+		.social li {
+			margin: 0.35rem 0;
+		}
+	</style>
+</BaseLayout>
