@@ -1,0 +1,14 @@
+:root {
+	/* Colors */
+	--color-bg: #14140f; /* Asphalt Black — base background */
+	--color-surface: #232320; /* Deep Charcoal — cards */
+	--color-border: #c9cdd3; /* Chrome Silver — borders/metallic accents */
+	--color-accent: #b8860b; /* Gold Plate — primary accent/CTAs */
+	--color-accent-alt: #a61c2e; /* Candy Red — sparing accent */
+	--color-text: #f2efea; /* Warm White — body text */
+
+	/* Type */
+	--font-display: 'Oswald', sans-serif; /* headlines only */
+	--font-body: 'Work Sans', sans-serif;
+	--font-mono: 'IBM Plex Mono', monospace; /* specs: spoke count, price */
+}

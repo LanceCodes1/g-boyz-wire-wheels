@@ -1,0 +1,57 @@
+@import './tokens.css';
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: var(--color-bg);
+	color: var(--color-text);
+	font-family: var(--font-body);
+	line-height: 1.5;
+}
+
+h1,
+h2,
+h3 {
+	font-family: var(--font-display);
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	font-weight: 500;
+	margin: 0 0 0.5em;
+}
+
+a {
+	color: var(--color-accent);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+/* Shared page container for non-hero pages/sections, keeps content off
+   the full-bleed edge without duplicating the same rule in each page. */
+.page {
+	max-width: 960px;
+	margin: 0 auto;
+	padding: 2rem 1.5rem;
+}
+
+.page section + section {
+	margin-top: 2.5rem;
+}
+
+/* Shared by catalog.astro and the homepage's featured-wheels section. */
+.wheel-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	gap: 1.5rem;
+	margin-top: 1.5rem;
+}

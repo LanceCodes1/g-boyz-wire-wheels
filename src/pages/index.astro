@@ -1,6 +1,7 @@
 ---
 import { sanityClient } from '../lib/sanity';
 import WheelCard from '../components/WheelCard.astro';
+import SpokeDivider from '../components/SpokeDivider.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { WHEELS_QUERY, BUSINESS_INFO_QUERY, type WheelData, type BusinessInfo } from '../lib/queries';
 
@@ -18,8 +19,10 @@ const contact = businessInfo?.contact ?? {};
 			<a href="/contact" class="cta">Request a Quote</a>
 		</section>
 
+		<SpokeDivider />
+
 		{featuredWheels.length > 0 && (
-			<section class="featured-wheels">
+			<section class="featured-wheels page">
 				<h2>Featured Styles</h2>
 				<div class="wheel-grid">
 					{featuredWheels.map((w) => <WheelCard wheel={w} />)}
@@ -27,7 +30,9 @@ const contact = businessInfo?.contact ?? {};
 			</section>
 		)}
 
-		<section class="about">
+		<SpokeDivider />
+
+		<section class="about page">
 			<h2>About G Boyz Wire Wheels</h2>
 			<p>
 				G Boyz Wire Wheels started with a simple idea — do it right, every time, and let
@@ -39,11 +44,60 @@ const contact = businessInfo?.contact ?? {};
 			</p>
 		</section>
 
-		<section class="contact-strip">
+		<SpokeDivider />
+
+		<section class="contact-strip page">
 			{contact.phone && <p>{contact.phone}</p>}
 			{contact.address && <p>{contact.address}</p>}
 			<a href="/contact">See full hours &amp; contact info</a>
 		</section>
 
-		<p><a href="/es/">Ver en Español</a></p>
+		<p class="page"><a href="/es/">Ver en Español</a></p>
+
+		<style>
+			.hero {
+				width: 100%;
+				text-align: center;
+				padding: 6rem 1.5rem;
+				background: radial-gradient(circle at 50% 30%, var(--color-surface) 0%, var(--color-bg) 70%);
+			}
+
+			.hero h1 {
+				font-size: clamp(2rem, 5vw, 3.5rem);
+				max-width: 720px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+			.hero p {
+				max-width: 520px;
+				margin: 1rem auto 0;
+				opacity: 0.85;
+			}
+
+			.cta {
+				display: inline-block;
+				margin-top: 1.75rem;
+				padding: 0.75rem 2rem;
+				background-color: var(--color-accent);
+				color: var(--color-bg);
+				font-family: var(--font-body);
+				font-weight: 600;
+				border-radius: 2px;
+				transition: background-color 0.15s ease;
+			}
+
+			.cta:hover {
+				background-color: var(--color-accent-alt);
+				text-decoration: none;
+			}
+
+			.about p {
+				max-width: 640px;
+			}
+
+			.contact-strip p {
+				margin: 0.25rem 0;
+			}
+		</style>
 </BaseLayout>

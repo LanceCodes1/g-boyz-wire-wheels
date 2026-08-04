@@ -16,6 +16,7 @@ const emailHref = contact.email ? `mailto:${contact.email}` : null;
 ---
 
 <BaseLayout title="Contact — G Boyz Wire Wheels" lang="en">
+	<div class="page">
 		<h1>Contact</h1>
 
 		<section class="hours">
@@ -59,4 +60,35 @@ const emailHref = contact.email ? `mailto:${contact.email}` : null;
 				</ul>
 			</section>
 		)}
+	</div>
+
+	<style>
+		.hours ul,
+		.social ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.hours li {
+			display: flex;
+			justify-content: space-between;
+			max-width: 320px;
+			padding: 0.35rem 0;
+			border-bottom: 1px solid var(--color-surface);
+		}
+
+		.hours .status {
+			font-family: var(--font-mono);
+			color: var(--color-border);
+		}
+
+		.contact-info p {
+			margin: 0.35rem 0;
+		}
+
+		.social li {
+			margin: 0.35rem 0;
+		}
+	</style>
 </BaseLayout>
