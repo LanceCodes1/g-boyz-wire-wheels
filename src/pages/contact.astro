@@ -1,5 +1,6 @@
 ---
 import { sanityClient } from '../lib/sanity';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import { BUSINESS_INFO_QUERY, type BusinessInfo } from '../lib/queries';
 
 const businessInfo = await sanityClient.fetch<BusinessInfo | null>(BUSINESS_INFO_QUERY);
@@ -14,16 +15,7 @@ const phoneHref = contact.phone ? `tel:${contact.phone.replace(/[^\d+]/g, '')}` 
 const emailHref = contact.email ? `mailto:${contact.email}` : null;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Contact — G Boyz Wire Wheels</title>
-	</head>
-	<body>
+<BaseLayout title="Contact — G Boyz Wire Wheels" lang="en">
 		<h1>Contact</h1>
 
 		<section class="hours">
@@ -67,5 +59,4 @@ const emailHref = contact.email ? `mailto:${contact.email}` : null;
 				</ul>
 			</section>
 		)}
-	</body>
-</html>
+</BaseLayout>

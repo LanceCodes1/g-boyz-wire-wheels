@@ -1,6 +1,7 @@
 ---
 import { sanityClient } from '../../lib/sanity';
 import WheelCard from '../../components/WheelCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import { WHEELS_QUERY, BUSINESS_INFO_QUERY, type WheelData, type BusinessInfo } from '../../lib/queries';
 
 const allWheels = await sanityClient.fetch<WheelData[]>(WHEELS_QUERY);
@@ -10,16 +11,7 @@ const businessInfo = await sanityClient.fetch<BusinessInfo | null>(BUSINESS_INFO
 const contact = businessInfo?.contact ?? {};
 ---
 
-<html lang="es">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>G Boyz Wire Wheels</title>
-	</head>
-	<body>
+<BaseLayout title="G Boyz Wire Wheels" lang="es">
 		<section class="hero">
 			<h1>Ruedas de Alambre Personalizadas, Hechas a Pedido</h1>
 			<p>Ruedas de alambre hechas a mano para clásicos, lowriders y autos personalizados — todos los estilos, todos los acabados.</p>
@@ -55,5 +47,4 @@ const contact = businessInfo?.contact ?? {};
 		</section>
 
 		<p><a href="/">View in English</a></p>
-	</body>
-</html>
+</BaseLayout>

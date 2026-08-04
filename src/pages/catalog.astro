@@ -1,21 +1,13 @@
 ---
 import { sanityClient } from '../lib/sanity';
 import WheelCard from '../components/WheelCard.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import { WHEELS_QUERY, type WheelData } from '../lib/queries';
 
 const wheels = await sanityClient.fetch<WheelData[]>(WHEELS_QUERY);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Catalog — G Boyz Wire Wheels</title>
-	</head>
-	<body>
+<BaseLayout title="Catalog — G Boyz Wire Wheels" lang="en">
 		<h1>Catalog</h1>
 		{wheels.length > 0 ? (
 			<div class="wheel-grid">
@@ -24,5 +16,4 @@ const wheels = await sanityClient.fetch<WheelData[]>(WHEELS_QUERY);
 		) : (
 			<p>No wheels in Sanity yet.</p>
 		)}
-	</body>
-</html>
+</BaseLayout>
